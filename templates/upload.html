@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>上传</title>
+</head>
+<body>
+<form style="line-height: 6rem; text-align: center; margin-bottom: 2rem;" enctype="multipart/form-data" action="/doupload" method="POST">
+    <p><input type="file" name="file" style="height: 4rem; "></p>
+    <p>upload path: <select name="file_path" style="height: 2rem; ">
+    {% for item in paths %}
+    <option value="{{item}}">{{item}}</option>
+    {% endfor %}
+    </select></p>
+    <p><input type="submit" name="Submit" style=" height:4rem; "></p>
+</form>
+
+<form style="line-height: 3rem; text-align: center;" action="/uncompress" method="POST">
+    <p>
+    uncompress dir: <select name="file_path" style="height: 2rem; ">
+    {% for item in paths %}
+    <option value="{{item}}">{{item}}</option>
+    {% endfor %}
+    </select></p>
+    <p>uncompress rar file: <select name="rar_file" style="height: 2rem; ">
+    <option value="">None</option>
+    {% for item in rar_files %}
+    <option value="{{item}}">{{item}}</option>
+    {% endfor %}
+    </select></p>
+    <p>uncompress zip file: <select name="zip_file" style="height: 2rem; ">
+    <option value="">None</option>
+    {% for item in zip_files %}
+    <option value="{{item}}">{{item}}</option>
+    {% endfor %}
+    </select></p>
+    <p><input type="submit" name="Submit" value="UnCompress" style=" height:4rem; "></p>
+</form>
+<form style="line-height: 3rem; text-align: center; margin-top:2rem;" action="/mkdir" method="POST">
+    <p>
+    mkdir path: <select name="file_path" style="height: 2rem; ">
+    {% for item in paths %}
+    <option value="{{item}}">{{item}}</option>
+    {% endfor %}
+    </select>
+    <p><input type="text" placeholder="dir" name="dir_name"></p>
+    <p><input type="submit" name="Submit" value="mkdir" style=" height:4rem; "></p>
+</form>
+</body>
+</html>
