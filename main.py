@@ -7,12 +7,16 @@ from flask import request
 from werkzeug import secure_filename
 import os,sys
 import ConfigParser
-app = Flask(__name__)
 
-@app.route('/')
+app = Flask(__name__)
+cf = ConfigParser.ConfigParser()
+cf.read("config.ini")
+
+@app.route('/', methods=['GET'])
 def index():
-    cf = ConfigParser.ConfigParser()
-    cf.read("config.ini")
+    password = request.args.get("password")
+    if not password or password != cf.get("common", "password"):
+        return render_template('login.html')
     read_folder = cf.get("common", "read_folder")
     fileHandle = FileHandle()
     fileHandle.get_paths(read_folder)
@@ -69,5 +73,7 @@ class FileHandle:
 
 if __name__ == '__main__':
     reload(sys)
-    sys.setdefaultencoding('utf8') 
-    app.run(debug=True)
+    sys.setdefaultencoding('utf8')
+    app.debug = cf.get("common", "debug")
+    app.port = cf.get("common", "port")
+    app.run()
